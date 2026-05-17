@@ -29,7 +29,9 @@ export interface ExtensionRuntimeEvent {
 }
 export interface BundleReloadEvent {
     type: RuntimeEventType.BundleReload;
+    /** Which bundle to reload. Omit or "default" for the default bundle. */
     bundleName?: string;
+    /** What to reload. Defaults to ["bundle"] if omitted. */
     targets?: Array<"plugins" | "mcp" | "skills" | "bundle" | "all">;
 }
 export type RuntimeEvent = {
@@ -45,6 +47,7 @@ export type RuntimeEvent = {
     id: string;
     name: string;
     label: string;
+    arguments?: Record<string, unknown>;
 } | {
     type: RuntimeEventType.ToolRunEnd;
     id: string;

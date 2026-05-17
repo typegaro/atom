@@ -8,7 +8,7 @@ import type { AtomCliContext } from "./context";
 // subcommands from the user's perspective.
 export async function registerPluginRuntimeCommands(program: Command, context: AtomCliContext): Promise<void> {
   const bundles = new BundleStore();
-  const allowList = context.cliBundleName ? new Set(bundles.resolvePlugins(context.cliBundleName) ?? []) : new Set();
+  const allowList = new Set<string>(context.cliBundleName ? (bundles.resolvePlugins(context.cliBundleName) ?? []) : []);
   const pluginManager = new PluginManager([], allowList);
   await pluginManager.loadIfNeeded();
   const host = new AtomAppRuntime({

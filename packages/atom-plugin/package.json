@@ -23,5 +23,9 @@
     "@typegaro/atom-types": "workspace:*",
     "commander": "^14.0.1"
   },
-  "types": "./index.d.ts"
+  "types": "./index.d.ts",
+  "scripts": {
+    "build": "rm -rf dist && bun build ./src/index.ts --outdir ./dist --target bun && tsc -p ./tsconfig.build.json && node ../../scripts/prepare-npm-package.mjs packages/atom-plugin",
+    "typecheck": "tsc -p ../../tsconfig.json --noEmit"
+  }
 }

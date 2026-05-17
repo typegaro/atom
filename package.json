@@ -9,7 +9,7 @@
     "atom": "bun packages/atom-cli/src/index.ts",
     "doctor": "bun run atom doctor",
     "dev": "bun run --filter '*' dev",
-    "build:public": "bun run --filter '@typegaro/atom-types' build && bun run --filter '@typegaro/atom-plugin' build && bun run --filter '@typegaro/atom' build",
+    "build:public": "bun run --filter './packages/atom-types' build && bun run --filter './packages/atom-plugin' build && bun run --filter './packages/atom-cli' build",
     "typecheck": "bun run --filter '*' typecheck",
     "check": "bun run typecheck"
   },
