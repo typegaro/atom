@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "bun run --watch src/index.ts",
-    "typecheck": "tsc -p ../../tsconfig.json --noEmit --ignoreDeprecations 6.0"
+    "typecheck": "tsc -p ../../tsconfig.json --noEmit"
   },
   "dependencies": {
     "@typegaro/atom-plugin": "workspace:*",

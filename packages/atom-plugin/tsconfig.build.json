@@ -8,7 +8,6 @@
     "stripInternal": true,
     "rootDir": "./src",
     "outDir": "./dist",
-    "baseUrl": ".",
     "paths": {
       "@typegaro/atom-types": ["../atom-types/dist/index.d.ts"]
     }
