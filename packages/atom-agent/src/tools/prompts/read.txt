@@ -1,0 +1,3 @@
+Read a specific range of lines from a UTF-8 text file. Always specify `offset`
+and `limit`. Prefer small reads first, then continue with a later offset as
+needed. Do not use this for binary files.

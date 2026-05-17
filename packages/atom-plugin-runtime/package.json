@@ -1,0 +1,23 @@
+{
+  "name": "atom-plugin-runtime",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "typecheck": "tsc -p ../../tsconfig.json --noEmit --ignoreDeprecations 6.0"
+  },
+  "dependencies": {
+    "@typegaro/atom-plugin": "workspace:*",
+    "@typegaro/atom-types": "workspace:*",
+    "atom-ai": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}

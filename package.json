@@ -1,0 +1,23 @@
+{
+  "name": "atom-workspace",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "atom": "bun packages/atom-cli/src/index.ts",
+    "doctor": "bun run atom doctor",
+    "dev": "bun run --filter '*' dev",
+    "build:public": "bun run --filter '@typegaro/atom-types' build && bun run --filter '@typegaro/atom-plugin' build && bun run --filter '@typegaro/atom' build",
+    "typecheck": "bun run --filter '*' typecheck",
+    "check": "bun run typecheck"
+  },
+  "devDependencies": {
+    "bun-types": "^1.3.12",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@opentui/core": "^0.2.0"
+  }
+}

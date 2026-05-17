@@ -1,0 +1,3 @@
+Edit an existing UTF-8 text file by replacing one exact text match. Read the
+file first so `oldText` is exact. Make `oldText` specific enough to match only
+one location.

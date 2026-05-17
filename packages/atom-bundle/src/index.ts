@@ -1,0 +1,12 @@
+export { AgentBundleManager } from "./agent-bundle-manager";
+export type { AgentBundleManagerOptions } from "./agent-bundle-manager";
+export type { AgentBundle } from "./agent-bundle";
+export { BundleStore } from "./bundle-store";
+export type { BundleDefinition, BundleEntry, ResolvedBundle } from "./bundle-store";
+export { SkillManager } from "./skill-manager";
+export { loadSkills, listSkillSources } from "./skills";
+export type { Skill, SkillSource } from "./skills";
+export { DEFAULT_SYSTEM_PROMPT, loadWorkspaceInstructions, buildSystemPromptShards, buildSystemPrompt, escapeXml } from "./prompt";
+export type { PromptShard } from "./prompt";
+export { buildCoreTools } from "./tools";
+export type { ConfigScope } from "./config-utils";

@@ -1,0 +1,3 @@
+Run a shell command in zsh inside the workspace root. Use this when shell
+execution is the right tool for the job and return the command output with its
+exit code.

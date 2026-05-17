@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "Preserve",
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"],
+      "@typegaro/atom-types": ["./packages/atom-types/src/index.ts"],
+      "@typegaro/atom-plugin": ["./packages/atom-plugin/src/index.ts"],
+      "atom-ai": ["./packages/atom-ai/src/index.ts"],
+      "atom-agent": ["./packages/atom-agent/src/index.ts"],
+      "atom-app": ["./packages/atom-app/src/index.ts"],
+      "atom-mcp": ["./packages/atom-mcp/src/index.ts"],
+      "atom-bundle": ["./packages/atom-bundle/src/index.ts"],
+      "atom-plugin-runtime": ["./packages/atom-plugin-runtime/src/index.ts"],
+      "atom-shared": ["./packages/atom-shared/src/index.ts"]
+    },
+    "lib": ["ES2022"],
+    "strict": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "types": ["bun-types"]
+  },
+  "exclude": ["examples"]
+}

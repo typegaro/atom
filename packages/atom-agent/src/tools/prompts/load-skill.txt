@@ -1,0 +1,2 @@
+Activate a skill by its exact name and load its full instructions into the
+conversation before proceeding with a task that matches that skill.

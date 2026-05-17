@@ -1,0 +1,31 @@
+{
+  "name": "@typegaro/atom",
+  "version": "0.0.1",
+  "type": "module",
+  "bin": "./src/index.ts",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "build": "rm -rf dist && bun build ./src/index.ts --outdir ./dist --target bun && node ../../scripts/prepare-npm-package.mjs packages/atom-cli",
+    "typecheck": "tsc -p ../../tsconfig.json --noEmit",
+    "start": "bun run src/index.ts"
+  },
+  "dependencies": {
+    "@typegaro/atom-plugin": "workspace:*",
+    "atom-agent": "workspace:*",
+    "atom-app": "workspace:*",
+    "atom-ai": "workspace:*",
+    "atom-bundle": "workspace:*",
+    "atom-mcp": "workspace:*",
+    "atom-plugin-runtime": "workspace:*",
+    "commander": "^14.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
