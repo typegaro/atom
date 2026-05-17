@@ -41,17 +41,29 @@ jobs:
       - name: Build public packages
         run: bun run build:public
 
-      - name: Publish atom-types
-        run: npm publish ./packages/atom-types/dist --access public
+      - name: Publish public packages
+        shell: bash
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -euo pipefail
 
-      - name: Publish atom-plugin
-        run: npm publish ./packages/atom-plugin/dist --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          publish_if_new() {
+            local package_dir="$1"
+            local package_name
+            local package_version
 
-      - name: Publish atom CLI
-        run: npm publish ./packages/atom-cli/dist --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+            package_name="$(node -p "require('./${package_dir}/dist/package.json').name")"
+            package_version="$(node -p "require('./${package_dir}/dist/package.json').version")"
+
+            if npm view "${package_name}@${package_version}" version >/dev/null 2>&1; then
+              echo "${package_name}@${package_version} already exists; skipping."
+              return 0
+            fi
+
+            npm publish "./${package_dir}/dist" --access public
+          }
+
+          publish_if_new packages/atom-types
+          publish_if_new packages/atom-plugin
+          publish_if_new packages/atom-cli
