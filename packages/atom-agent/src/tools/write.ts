@@ -1,13 +1,11 @@
-import { readFileSync } from "node:fs";
 import type { BuiltInTool } from "./types";
+import { WRITE_TOOL_DESCRIPTION } from "./descriptions";
 import { expectString, resolveWorkspacePath } from "../tool-runtime-args";
-
-const DESCRIPTION = readFileSync(new URL("./prompts/write.txt", import.meta.url), "utf8").trim();
 
 export const writeTool: BuiltInTool = {
   definition: {
     name: "write",
-    description: DESCRIPTION,
+    description: WRITE_TOOL_DESCRIPTION,
     inputSchema: {
       type: "object",
       properties: {

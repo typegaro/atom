@@ -1,13 +1,12 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import type { BuiltInTool } from "./types";
+import { EDIT_TOOL_DESCRIPTION } from "./descriptions";
 import { expectNullableString, expectString, resolveWorkspacePath } from "../tool-runtime-args";
-
-const DESCRIPTION = readFileSync(new URL("./prompts/edit.txt", import.meta.url), "utf8").trim();
 
 export const editTool: BuiltInTool = {
   definition: {
     name: "edit",
-    description: DESCRIPTION,
+    description: EDIT_TOOL_DESCRIPTION,
     inputSchema: {
       type: "object",
       properties: {

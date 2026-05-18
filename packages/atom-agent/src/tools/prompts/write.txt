@@ -1,2 +1,0 @@
-Write UTF-8 text to a file, replacing its full contents. Use this for new files
-or full rewrites rather than targeted edits to existing files.

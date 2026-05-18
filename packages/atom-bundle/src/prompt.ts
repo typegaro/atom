@@ -1,11 +1,9 @@
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { DEFAULT_SYSTEM_PROMPT } from "./default-system-prompt";
 import type { Skill } from "./skills";
 
-export const DEFAULT_SYSTEM_PROMPT = readFileSync(
-  new URL("./prompts/default-system.txt", import.meta.url),
-  "utf8"
-).trim();
+export { DEFAULT_SYSTEM_PROMPT };
 
 // Workspace instructions are intentionally coarse-grained: we read a small set
 // of convention files and inject their full contents into the system prompt.

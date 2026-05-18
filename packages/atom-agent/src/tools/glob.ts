@@ -1,15 +1,14 @@
-import { existsSync, readFileSync, statSync } from "node:fs";
+import { existsSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import type { BuiltInTool } from "./types";
+import { GLOB_TOOL_DESCRIPTION } from "./descriptions";
 import { expectString } from "../tool-runtime-args";
-
-const DESCRIPTION = readFileSync(new URL("./prompts/glob.txt", import.meta.url), "utf8").trim();
 const RESULT_LIMIT = 100;
 
 export const globTool: BuiltInTool = {
   definition: {
     name: "glob",
-    description: DESCRIPTION,
+    description: GLOB_TOOL_DESCRIPTION,
     inputSchema: {
       type: "object",
       properties: {

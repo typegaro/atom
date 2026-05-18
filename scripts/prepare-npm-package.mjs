@@ -1,4 +1,4 @@
-import { copyFileSync, cpSync, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
 const [, , packageDirArg] = process.argv;
@@ -22,8 +22,7 @@ const publicConfigs = {
     description: "Atom local agent CLI",
     bin: "./index.js",
     engines: { bun: ">=1.3.12" },
-    workspaceDependencies: ["@typegaro/atom-plugin"],
-    copyDirs: [{ from: "packages/atom-bundle/src/prompts", to: "prompts" }]
+    workspaceDependencies: ["@typegaro/atom-plugin"]
   },
   "packages/atom-plugin": {
     description: "SDK for building Atom plugins",
@@ -43,10 +42,6 @@ const hasReadme = existsSync(readmePath);
 
 if (hasReadme) {
   copyFileSync(readmePath, join(distDir, "README.md"));
-}
-
-for (const copyDir of config.copyDirs ?? []) {
-  cpSync(join(rootDir, copyDir.from), join(distDir, copyDir.to), { recursive: true });
 }
 
 const distEntries = readdirSync(distDir)

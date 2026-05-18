@@ -1,16 +1,15 @@
-import { existsSync, readFileSync, statSync } from "node:fs";
+import { existsSync, statSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import type { BuiltInTool } from "./types";
+import { GREP_TOOL_DESCRIPTION } from "./descriptions";
 import { expectString } from "../tool-runtime-args";
-
-const DESCRIPTION = readFileSync(new URL("./prompts/grep.txt", import.meta.url), "utf8").trim();
 const MAX_LINE_LENGTH = 2000;
 const RESULT_LIMIT = 100;
 
 export const grepTool: BuiltInTool = {
   definition: {
     name: "grep",
-    description: DESCRIPTION,
+    description: GREP_TOOL_DESCRIPTION,
     inputSchema: {
       type: "object",
       properties: {

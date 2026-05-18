@@ -1,16 +1,16 @@
-import { createReadStream, existsSync, statSync, readFileSync } from "node:fs";
+import { createReadStream, existsSync, statSync } from "node:fs";
 import { open } from "node:fs/promises";
 import { createInterface } from "node:readline";
 import type { BuiltInTool } from "./types";
+import { READ_TOOL_DESCRIPTION } from "./descriptions";
 import { expectRequiredPositiveInteger, expectString, resolveWorkspacePath } from "../tool-runtime-args";
 
 const READ_SAMPLE_BYTES = 4096;
-const DESCRIPTION = readFileSync(new URL("./prompts/read.txt", import.meta.url), "utf8").trim();
 
 export const readTool: BuiltInTool = {
   definition: {
     name: "read",
-    description: DESCRIPTION,
+    description: READ_TOOL_DESCRIPTION,
     inputSchema: {
       type: "object",
       properties: {

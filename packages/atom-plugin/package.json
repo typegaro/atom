@@ -1,6 +1,6 @@
 {
   "name": "@typegaro/atom-plugin",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "SDK for building Atom plugins",
   "type": "module",
   "main": "./index.js",

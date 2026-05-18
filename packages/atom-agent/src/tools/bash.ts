@@ -1,13 +1,11 @@
-import { readFileSync } from "node:fs";
 import type { BuiltInTool } from "./types";
+import { BASH_TOOL_DESCRIPTION } from "./descriptions";
 import { expectString } from "../tool-runtime-args";
-
-const DESCRIPTION = readFileSync(new URL("./prompts/bash.txt", import.meta.url), "utf8").trim();
 
 export const bashTool: BuiltInTool = {
   definition: {
     name: "bash",
-    description: DESCRIPTION,
+    description: BASH_TOOL_DESCRIPTION,
     inputSchema: {
       type: "object",
       properties: {

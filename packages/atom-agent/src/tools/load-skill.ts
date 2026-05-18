@@ -1,10 +1,9 @@
-import { readdirSync, readFileSync } from "node:fs";
+import { readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import type { BuiltInTool } from "./types";
+import { LOAD_SKILL_TOOL_DESCRIPTION } from "./descriptions";
 import { expectString } from "../tool-runtime-args";
 import { escapeXml } from "atom-bundle";
-
-const DESCRIPTION = readFileSync(new URL("./prompts/load-skill.txt", import.meta.url), "utf8").trim();
 const IGNORED_DIRS = new Set([".git", "node_modules"]);
 const MAX_SKILL_RESOURCE_COUNT = 128;
 
@@ -12,7 +11,7 @@ export function createLoadSkillTool(): BuiltInTool {
   return {
     definition: {
       name: "load_skill",
-      description: DESCRIPTION,
+      description: LOAD_SKILL_TOOL_DESCRIPTION,
       inputSchema: {
         type: "object",
         properties: {
