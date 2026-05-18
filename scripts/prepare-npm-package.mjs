@@ -21,11 +21,13 @@ const publicConfigs = {
   "packages/atom-cli": {
     description: "Atom local agent CLI",
     bin: "./index.js",
-    engines: { bun: ">=1.3.12" }
+    engines: { bun: ">=1.3.12" },
+    workspaceDependencies: ["@typegaro/atom-plugin"]
   },
   "packages/atom-plugin": {
     description: "SDK for building Atom plugins",
-    engines: { bun: ">=1.3.12" }
+    engines: { bun: ">=1.3.12" },
+    workspaceDependencies: ["@typegaro/atom-types"]
   }
 };
 
@@ -45,9 +47,46 @@ if (hasReadme) {
   copyFileSync(readmePath, join(distDir, "README.md"));
 }
 
+const sourceDependencies = sourcePackage.dependencies ?? {};
+const publicWorkspaceDependencies = new Set(config.workspaceDependencies ?? []);
 const dependencies = Object.fromEntries(
-  Object.entries(sourcePackage.dependencies ?? {}).filter(([, version]) => !String(version).startsWith("workspace:"))
+  Object.entries(sourceDependencies).filter(([name, version]) => (
+    !String(version).startsWith("workspace:")
+    || publicWorkspaceDependencies.has(name)
+  )).map(([name, version]) => [
+    name,
+    String(version).startsWith("workspace:")
+      ? getWorkspaceDependencyVersion(name)
+      : version
+  ])
 );
+
+function getWorkspaceDependencyVersion(packageName) {
+  const workspacePackagePath = findWorkspacePackageJson(packageName);
+  if (!workspacePackagePath) {
+    throw new Error(`Could not find workspace dependency ${packageName}`);
+  }
+
+  const workspacePackage = JSON.parse(readFileSync(workspacePackagePath, "utf8"));
+  if (!workspacePackage.version) {
+    throw new Error(`Workspace dependency ${packageName} has no version`);
+  }
+
+  return `^${workspacePackage.version}`;
+}
+
+function findWorkspacePackageJson(packageName) {
+  const packagesDir = join(rootDir, "packages");
+  for (const entry of readdirSync(packagesDir)) {
+    const packageJsonPath = join(packagesDir, entry, "package.json");
+    if (!existsSync(packageJsonPath)) continue;
+
+    const pkg = JSON.parse(readFileSync(packageJsonPath, "utf8"));
+    if (pkg.name === packageName) return packageJsonPath;
+  }
+
+  return undefined;
+}
 
 const publishPackage = {
   name: sourcePackage.name,
