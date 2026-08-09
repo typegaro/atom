@@ -38,9 +38,14 @@ type OpenRouterClient = {
   };
 };
 
+// Bun resolves the package's "source" export condition first, which points at a
+// source tree that is not shipped in the npm package. Resolving through the
+// exported "./package.json" entry and importing the sibling file avoids that
+// broken condition while staying on the shipped ESM build.
 async function loadOpenRouter(): Promise<new (options: { apiKey: string }) => OpenRouterClient> {
-  const sdkModulePath = "@openrouter/sdk/esm/index.js";
-  const sdk = await import(sdkModulePath);
+  const packageJsonUrl = import.meta.resolve("@openrouter/sdk/package.json");
+  const entryUrl = new URL("./esm/index.js", packageJsonUrl).href;
+  const sdk = await import(entryUrl);
   return sdk.OpenRouter as new (options: { apiKey: string }) => OpenRouterClient;
 }
 

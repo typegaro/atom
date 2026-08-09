@@ -152,8 +152,16 @@ class PluginSessionView implements PluginSessionRuntime<"models" | "sessions"> {
     this.session.interrupt();
   }
 
+  close() {
+    this.session.close();
+  }
+
   getTotalUsage() {
     return this.session.getTotalUsage();
+  }
+
+  supportsImages() {
+    return this.session.supportsImages();
   }
 
   switchModel(modelId: string) {

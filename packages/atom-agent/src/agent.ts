@@ -138,6 +138,11 @@ export class AtomAgent {
     return shards.length > 0 ? shards : this.refreshSystemPrompt();
   }
 
+  /** Whether the active model can accept image input. */
+  supportsImages(): boolean {
+    return this.runtime.model.capabilities.images;
+  }
+
   getSessionId(): string | undefined {
     return this.context.getSessionId();
   }

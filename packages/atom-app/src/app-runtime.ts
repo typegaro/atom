@@ -86,7 +86,10 @@ export class AtomAppRuntime {
 
     const session = new AtomAppSessionRuntime({
       controller,
-      ready: this.prepareController(controller, options)
+      ready: this.prepareController(controller, options),
+      dispose: () => {
+        this.sessions.delete(key);
+      }
     });
 
     this.sessions.set(key, session);

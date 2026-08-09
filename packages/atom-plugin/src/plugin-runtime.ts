@@ -97,6 +97,10 @@ export interface PluginSessionRuntimeBase {
   submit(input: string | UserMessagePart[] | InputEvent): Promise<{ runId: string }>;
   subscribe(listener: (event: PluginRuntimeEvent) => void | Promise<void>): () => void;
   interrupt(): void;
+  /** Tear down the session and release it. No events are delivered afterwards. */
+  close(): void;
+  /** Whether the session's active model accepts image input. */
+  supportsImages(): boolean;
   getTotalUsage(): Usage;
   getActiveSystemPrompt(): string | undefined;
   getActiveSystemPromptShards(): PluginSystemPromptShard[];

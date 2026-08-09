@@ -79,6 +79,10 @@ export class AtomAppController implements PluginControllerFor<"models" | "sessio
     return this.activeModelId;
   }
 
+  supportsImages(): boolean {
+    return this.agent?.supportsImages() ?? false;
+  }
+
   getActiveBundleName(): string | undefined {
     return this.bundleName;
   }

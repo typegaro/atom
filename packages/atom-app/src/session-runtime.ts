@@ -15,6 +15,7 @@ type SessionListener = (event: PluginRuntimeEvent) => void | Promise<void>;
 export interface AtomAppSessionRuntimeOptions {
   controller: AtomAppController;
   ready: Promise<void>;
+  dispose: () => void;
 }
 
 // AtomAppSessionRuntime exposes a detached run channel over one controller.
@@ -27,14 +28,21 @@ export class AtomAppSessionRuntime implements PluginSessionRuntime<"models" | "s
   private readonly queue: Array<{ runId: string; input: string | UserMessagePart[] | InputEvent }> = [];
   private readonly controller: AtomAppController;
   private readonly readyPromise: Promise<void>;
+  private readonly dispose: () => void;
   private draining = false;
+  private closed = false;
 
   constructor(options: AtomAppSessionRuntimeOptions) {
     this.controller = options.controller;
     this.readyPromise = options.ready;
+    this.dispose = options.dispose;
   }
 
   async submit(input: string | UserMessagePart[] | InputEvent): Promise<{ runId: string }> {
+    if (this.closed) {
+      throw new Error("Cannot submit to a closed session");
+    }
+
     const runId = crypto.randomUUID();
     this.queue.push({ runId, input });
     void this.flushQueue();
@@ -52,12 +60,28 @@ export class AtomAppSessionRuntime implements PluginSessionRuntime<"models" | "s
     this.controller.interrupt();
   }
 
+  close(): void {
+    if (this.closed) {
+      return;
+    }
+
+    this.closed = true;
+    this.queue.length = 0;
+    this.listeners.clear();
+    this.interrupt();
+    this.dispose();
+  }
+
   getTotalUsage(): Usage {
     return this.controller.getTotalUsage();
   }
 
   switchModel(modelId: string): Promise<void> {
     return this.controller.switchModel(modelId);
+  }
+
+  supportsImages(): boolean {
+    return this.controller.supportsImages();
   }
 
   getActiveModelId(): string | undefined {
